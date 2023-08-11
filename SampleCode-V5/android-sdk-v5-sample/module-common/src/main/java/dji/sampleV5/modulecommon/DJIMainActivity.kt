@@ -7,15 +7,18 @@ import android.os.Build
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
+import android.view.LayoutInflater
 import android.view.View
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.app.ActivityCompat
+import androidx.core.text.parseAsHtml
 import dji.sampleV5.modulecommon.models.BaseMainActivityVm
 import dji.sampleV5.modulecommon.models.MSDKInfoVm
 import dji.sampleV5.modulecommon.models.MSDKManagerVM
 import dji.sampleV5.modulecommon.models.globalViewModels
+import dji.sampleV5.modulecommon.opengltest.Adapter
+import dji.sampleV5.modulecommon.opengltest.ItemUiState
 import dji.sampleV5.modulecommon.util.Helper
 import dji.v5.utils.common.LogUtils
 import dji.v5.utils.common.PermissionUtil
@@ -142,6 +145,7 @@ abstract class DJIMainActivity : AppCompatActivity() {
                 msdkInfoVm.initListener()
                 handler.postDelayed({
                     prepareUxActivity()
+                    showList()
                 }, 5000)
             } else {
                 ToastUtils.showToast("Register Failure: ${resultPair.second}")
@@ -165,6 +169,25 @@ abstract class DJIMainActivity : AppCompatActivity() {
         msdkManagerVM.lvDBDownloadProgress.observe(this) { resultPair ->
             ToastUtils.showToast("Database Download Progress current: ${resultPair.first}, total: ${resultPair.second}")
         }
+    }
+
+    private fun showList() {
+        val itemCount = 100
+        val gifs = arrayOf(
+            R.raw.icon_processing_claim,
+            R.raw.icon_processing_underwriting
+        )
+        val list = List(itemCount) {
+            ItemUiState.GIF(
+                title = "Index: <b>$it</b>".parseAsHtml(),
+                imageRes = gifs[it % 2]
+            )
+        }
+
+        val adapter = Adapter(LayoutInflater.from(this))
+        recycler_view.adapter = adapter
+
+        adapter.submitList(list)
     }
 
 
