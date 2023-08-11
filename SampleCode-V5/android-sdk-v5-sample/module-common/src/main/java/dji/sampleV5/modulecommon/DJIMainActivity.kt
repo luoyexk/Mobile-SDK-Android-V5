@@ -137,6 +137,7 @@ abstract class DJIMainActivity : AppCompatActivity() {
     }
 
     private fun observeSDKManagerStatus() {
+        showList()
         msdkManagerVM.lvRegisterState.observe(this) { resultPair ->
             val statusText: String?
             if (resultPair.first) {
@@ -145,7 +146,6 @@ abstract class DJIMainActivity : AppCompatActivity() {
                 msdkInfoVm.initListener()
                 handler.postDelayed({
                     prepareUxActivity()
-                    showList()
                 }, 5000)
             } else {
                 ToastUtils.showToast("Register Failure: ${resultPair.second}")

@@ -44,7 +44,7 @@ class MSDKManagerVM : ViewModel() {
 
                 // Don't forget to call the registerApp()
                 if (event == DJISDKInitEvent.INITIALIZE_COMPLETE) {
-                    SDKManager.getInstance().registerApp()
+//                    SDKManager.getInstance().registerApp()
                 }
             }
 
