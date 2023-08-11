@@ -11,7 +11,7 @@ import android.view.View
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.app.ActivityCompat
+import com.bumptech.glide.Glide
 import dji.sampleV5.modulecommon.models.BaseMainActivityVm
 import dji.sampleV5.modulecommon.models.MSDKInfoVm
 import dji.sampleV5.modulecommon.models.MSDKManagerVM
@@ -142,6 +142,8 @@ abstract class DJIMainActivity : AppCompatActivity() {
                 msdkInfoVm.initListener()
                 handler.postDelayed({
                     prepareUxActivity()
+                    Glide.with(imageView).load(R.raw.icon_processing_claim).into(imageView)
+                    Glide.with(imageView2).load(R.raw.icon_processing_underwriting).into(imageView2)
                 }, 5000)
             } else {
                 ToastUtils.showToast("Register Failure: ${resultPair.second}")
